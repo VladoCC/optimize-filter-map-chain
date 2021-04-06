@@ -7,7 +7,7 @@ fun Double.isInt(): Boolean {
 }
 
 fun Expression.toParsableString(): String {
-    var processed = toString().replace(" + ", "+")
+    val processed = toString().replace(" + ", "+")
         .replace(" - ", "-")
         .replace(Regex("\\dx")) {
             return@replace it.value[0] + "*" + it.value[1]

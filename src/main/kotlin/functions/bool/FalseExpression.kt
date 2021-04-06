@@ -14,4 +14,7 @@ object FalseExpression: SimpleBooleanExpression(NumExpression(1), NumExpression(
     override fun toInterval(num: Int): Interval {
         return NothingInterval
     }
+
+    override val simplificationRule: (Int, Int) -> Boolean
+        get() = { _, _ -> true }
 }

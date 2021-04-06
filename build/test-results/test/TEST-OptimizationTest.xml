@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="OptimizationTest" tests="23" skipped="0" failures="0" errors="0" timestamp="2021-04-06T01:28:33" hostname="WIN-JA2DUE70EHA" time="9.486">
+  <properties/>
+  <testcase name="syntaxErrorTest" classname="OptimizationTest" time="0.045"/>
+  <testcase name="noFilterSquareTest" classname="OptimizationTest" time="0.677"/>
+  <testcase name="intervalAndFalseTest" classname="OptimizationTest" time="0.465"/>
+  <testcase name="reproducibilityTest" classname="OptimizationTest" time="0.003"/>
+  <testcase name="twoIntervalsTest" classname="OptimizationTest" time="0.475"/>
+  <testcase name="intervalOrFalseTest" classname="OptimizationTest" time="0.331"/>
+  <testcase name="typeErrorMapTest" classname="OptimizationTest" time="0.001"/>
+  <testcase name="trueAndFalseTest" classname="OptimizationTest" time="0.301"/>
+  <testcase name="filtersEverythingTest" classname="OptimizationTest" time="0.362"/>
+  <testcase name="noFilterTest" classname="OptimizationTest" time="0.71"/>
+  <testcase name="noFilterMinusTest" classname="OptimizationTest" time="0.605"/>
+  <testcase name="intervalOrTrueTest" classname="OptimizationTest" time="0.735"/>
+  <testcase name="falseOrTrueTest" classname="OptimizationTest" time="0.575"/>
+  <testcase name="trueOrFalseTest" classname="OptimizationTest" time="0.607"/>
+  <testcase name="equalsTest" classname="OptimizationTest" time="0.23"/>
+  <testcase name="typeErrorFilterTest" classname="OptimizationTest" time="0.001"/>
+  <testcase name="noFilterMultiplicationTest" classname="OptimizationTest" time="0.692"/>
+  <testcase name="intervalAndTrueTest" classname="OptimizationTest" time="0.356"/>
+  <testcase name="noMapTest" classname="OptimizationTest" time="0.43"/>
+  <testcase name="normalFormEqualTest" classname="OptimizationTest" time="0.885"/>
+  <testcase name="lessOrEqualsTest" classname="OptimizationTest" time="0.51"/>
+  <testcase name="simpleExecutionTest" classname="OptimizationTest" time="0.022"/>
+  <testcase name="lessTest" classname="OptimizationTest" time="0.453"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

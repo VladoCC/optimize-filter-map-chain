@@ -3,41 +3,30 @@ import functions.bool.AndExpression
 import functions.bool.EqualsExpression
 import functions.NumExpression
 import functions.bool.BooleanExpression
-import functions.bool.SimpleBooleanExpression
 import functions.higher_order.FilterFunction
 import functions.higher_order.HigherOrderFunction
 import functions.higher_order.MapFunction
-import xyz.avarel.aljava.Equation
-import xyz.avarel.aljava.Expression
-import java.lang.StringBuilder
 
 fun main(args: Array<String>) {
     val chain = readLine()
     if (chain == null) {
-        syntaxError()
+        throw SyntaxError("Chain not found")
     } else {
-        val result = converter(chain, simplify = true)
+        val result = convert(chain, simplify = true)
         if (result != null) {
             println("${result.filter}%>%${result.map}")
         }
     }
 }
 
-fun converter(chain: String, simplify: Boolean = false): ResultStatement? {
-    try {
-        val objects = getFunctions(chain)
-        val result = normalize(objects)
-        return if (simplify) {
-            result.simplify()
-        } else {
-            result
-        }
-    } catch (e: SyntaxException) {
-        syntaxError()
-    } catch (e: TypeException) {
-        typeError()
+fun convert(chain: String, simplify: Boolean = false): ResultStatement? {
+    val objects = getFunctions(chain)
+    val result = normalize(objects)
+    return if (simplify) {
+        result.simplify()
+    } else {
+        result
     }
-    return null
 }
 
 fun getFunctions(chain: String): List<HigherOrderFunction<*>> {
@@ -47,7 +36,7 @@ fun getFunctions(chain: String): List<HigherOrderFunction<*>> {
     }
 }
 
-fun normalize(list: List<HigherOrderFunction<*>>): ResultStatement {
+private fun normalize(list: List<HigherOrderFunction<*>>): ResultStatement {
     var filter: FilterFunction? = null
     var map: MapFunction? = null
 
@@ -72,13 +61,5 @@ fun normalize(list: List<HigherOrderFunction<*>>): ResultStatement {
     return ResultStatement(filter, map)
 }
 
-fun syntaxError() {
-    print("SYNTAX ERROR")
-}
-
-fun typeError() {
-    print("TYPE ERROR")
-}
-
-class SyntaxException: Exception()
-class TypeException: Exception()
+class SyntaxError(text: String): Error(text)
+class TypeError(text: String): Error(text)

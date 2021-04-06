@@ -8,16 +8,16 @@ import functions.VarExpression
 abstract class ArithmeticalExpression(protected var arg1: IntExpression,
                                       protected var arg2: IntExpression
 ): IntExpression() {
-    fun containsVar(): Boolean {
+    fun containsVarArg(): Boolean {
         if (arg1 is VarExpression || arg2 is VarExpression) {
             return true
         }
         var result = false
         if (arg1 is ArithmeticalExpression) {
-            result = result || (arg1 as ArithmeticalExpression).containsVar()
+            result = result || (arg1 as ArithmeticalExpression).containsVarArg()
         }
         if (arg2 is ArithmeticalExpression) {
-            result = result || (arg2 as ArithmeticalExpression).containsVar()
+            result = result || (arg2 as ArithmeticalExpression).containsVarArg()
         }
         return result
     }

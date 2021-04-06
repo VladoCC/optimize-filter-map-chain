@@ -13,6 +13,16 @@ abstract class SimpleBooleanExpression(arg1: IntExpression, arg2: IntExpression)
     BooleanExpression<Int>(arg1, arg2) {
     override fun simplify(): Expression<Boolean> {
         super.simplify()
+        if (!(arg1 as IntExpression).containsVar() &&
+            !(arg2 as IntExpression).containsVar()) {
+            val result1 = arg1.execute(0)
+            val result2 = arg2.execute(0)
+            return if (simplificationRule.invoke(result1, result2)) {
+                TrueExpression
+            } else {
+                FalseExpression
+            }
+        }
         return this
     }
 
@@ -45,4 +55,5 @@ abstract class SimpleBooleanExpression(arg1: IntExpression, arg2: IntExpression)
         }
     }
     protected abstract fun toInterval(num: Int): Interval
+    protected abstract val simplificationRule: (Int, Int) -> Boolean
 }

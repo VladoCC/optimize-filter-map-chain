@@ -15,4 +15,7 @@ object TrueExpression: SimpleBooleanExpression(NumExpression(1), NumExpression(1
     override fun toInterval(num: Int): Interval {
         return EverythingInterval
     }
+
+    override val simplificationRule: (Int, Int) -> Boolean
+        get() = { _, _ -> true }
 }

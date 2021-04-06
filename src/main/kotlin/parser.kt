@@ -38,23 +38,29 @@ private data class BinaryOperation(val operator: Char, val arg1: String, val arg
 private fun parseBinaryOperation(exp: String): BinaryOperation {
     val innerExp = exp.substring(1, exp.length - 1)
     val operatorPos: Int
-    if (innerExp.startsWith("element")) {
-        operatorPos = 7
-    } else if (innerExp[0].isDigit()) {
-        operatorPos = findNum(innerExp)
-    } else if (innerExp[0] == '-') {
-        operatorPos = findNum(innerExp.substring(1)) + 1
-    } else if (innerExp[0] == '(') {
-        operatorPos = findComplex(innerExp)
-    } else {
-        operatorPos = -1
+    operatorPos = when {
+        innerExp.startsWith("element") -> {
+            7
+        }
+        innerExp[0].isDigit() -> {
+            findNum(innerExp)
+        }
+        innerExp[0] == '-' -> {
+            findNum(innerExp.substring(1)) + 1
+        }
+        innerExp[0] == '(' -> {
+            findComplex(innerExp)
+        }
+        else -> {
+            -1
+        }
     }
     if (operatorPos > -1) {
         return BinaryOperation(innerExp[operatorPos],
             innerExp.substring(0, operatorPos),
             innerExp.substring(operatorPos + 1, innerExp.length))
     } else {
-        throw SyntaxException()
+        throw SyntaxError("Invalid syntax for binary expression in the string: $exp")
     }
 }
 
@@ -67,22 +73,26 @@ private fun parseComplexIntExpression(exp: String): IntExpression {
             parseIntExpression(operation.arg2))
         '*' -> MultiplyExpression(parseIntExpression(operation.arg1),
             parseIntExpression(operation.arg2))
-        else -> throw TypeException()
+        else -> throw TypeError("Arithmetical expression not found in the string: $exp")
     }
 }
 
-public fun parseIntExpression(exp: String): IntExpression {
-    if (exp.startsWith("(")) {
-        return parseComplexIntExpression(exp)
-    } else if (exp == "element") {
-        return VarExpression
-    } else if (exp.matches(Regex("-?\\d+"))) {
-        return NumExpression(exp.toInt())
+fun parseIntExpression(exp: String): IntExpression {
+    return when {
+        exp.startsWith("(") -> {
+            parseComplexIntExpression(exp)
+        }
+        exp == "element" -> {
+            VarExpression
+        }
+        exp.matches(Regex("-?\\d+")) -> {
+            NumExpression(exp.toInt())
+        }
+        else -> throw SyntaxError("Invalid syntax for int expression in the string: $exp")
     }
-    throw SyntaxException()
 }
 
-public fun parseBooleanExpression(exp: String): BooleanExpression<*> {
+fun parseBooleanExpression(exp: String): BooleanExpression<*> {
     val operation = parseBinaryOperation(exp)
 
     return when (operation.operator) {
@@ -96,11 +106,11 @@ public fun parseBooleanExpression(exp: String): BooleanExpression<*> {
            parseIntExpression(operation.arg2))
        '=' -> EqualsExpression(parseIntExpression(operation.arg1),
            parseIntExpression(operation.arg2))
-        else -> throw TypeException()
+        else -> throw TypeError("Boolean expression not found in the string: $exp")
     }
 }
 
-public fun parseHigherOrderFunction(func: String): HigherOrderFunction<*> {
+fun parseHigherOrderFunction(func: String): HigherOrderFunction<*> {
     if (func.matches(Regex("map\\{.+}"))) {
         val exp = parseIntExpression(func.substring(4, func.length - 1))
         return MapFunction(exp)
@@ -108,5 +118,5 @@ public fun parseHigherOrderFunction(func: String): HigherOrderFunction<*> {
         val exp = parseBooleanExpression(func.substring(7, func.length - 1))
         return FilterFunction(exp)
     }
-    throw SyntaxException()
+    throw SyntaxError("Invalid syntax for higher order function in the string: $func")
 }

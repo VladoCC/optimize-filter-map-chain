@@ -16,16 +16,9 @@ class EqualsExpression(arg1: IntExpression, arg2: IntExpression): SimpleBooleanE
         return arg1.execute(variable) == arg2.execute(variable)
     }
     override fun simplify(): Expression<Boolean> {
-        super.simplify()
-        if (arg1 is ArithmeticalExpression && !(arg1 as ArithmeticalExpression).containsVar() &&
-            arg2 is ArithmeticalExpression && !(arg2 as ArithmeticalExpression).containsVar()) {
-            val result1 = arg1.execute(0)
-            val result2 = arg2.execute(0)
-            return if (result1 == result2) {
-                TrueExpression
-            } else {
-                FalseExpression
-            }
+        val res = super.simplify()
+        if (res != this) {
+            return res
         }
         val solution = solveExpression()
         if (solution != null) {
@@ -65,4 +58,7 @@ class EqualsExpression(arg1: IntExpression, arg2: IntExpression): SimpleBooleanE
     override fun toInterval(num: Int): Interval {
         return PointInterval(num)
     }
+
+    override val simplificationRule: (Int, Int) -> Boolean
+        get() = { arg1, arg2 -> arg1 == arg2 }
 }
