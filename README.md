@@ -4,7 +4,7 @@ Task from Jetbrain Internship 2021.
 ### Input:  
 You get a string containing chains of calls to `map` and `filter` functions.   
 Example:   
-```map{(element+10)}%>%filter{(element>10)}%>%map{(element*element)}```
+```map{(element+10)}%>%filter{(element>10)}%>%map{(element*element)}```   
 It performs described operations on a list of ints.
 
 ### Output:
